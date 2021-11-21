@@ -20,7 +20,7 @@ public class ProgrammingParticle : MonoBehaviour
     }
 }
 
-// 7 * 5 pompek
+// 16 * 5 pompek
 [System.Serializable]
 public class LanguageKeywords
 {
