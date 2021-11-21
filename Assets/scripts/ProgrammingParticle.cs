@@ -15,7 +15,8 @@ public class ProgrammingParticle : MonoBehaviour
       particle.transform.SetParent(parent);
       particle.transform.position = pos;
       particle.transform.localScale = new Vector3(1, 1, 1);
-      particle.GetComponent<TMP_Text>().text = LanguageKeywords.get("html");
+      TMP_Text text = particle.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+      text.text = LanguageKeywords.get("html");
     }
 }
 
