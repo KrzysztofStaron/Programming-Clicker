@@ -10,6 +10,6 @@
     "min-height", "min-width", "opacity", "outline", "overflow", "padding", "perspective",
     "position", "quotes", "resize", "right", "tab-size", "table-layout", "text-align",
     "text-decoration", "top", "transform", "transition", "visibility", "white-space",
-     "width", "word-spacing", "z-index"
+     "width", "word-spacing", "z-index","columns"
   ]
 }
