@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class cable : MonoBehaviour
 {
-  [SerializeField] LineRenderer rl;
+  private LineRenderer rl;
   [SerializeField] Transform[] points;
 
     void Awake()
     {
-      rl = GameObject.GetComponent<LineRenderer>();
+      rl = gameObject.GetComponent<LineRenderer>();
       rl.positionCount = 2;
 
       if (points.Length < 2) {
