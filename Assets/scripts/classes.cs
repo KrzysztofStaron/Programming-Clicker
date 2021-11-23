@@ -1,10 +1,19 @@
 using UnityEngine;
 using System;
-
+/*
+[SerializeField]
+[Header("text")]
+[Range()]
+[Tooltip("text")]
+[RequireComponent(typeof(Tilemap))]
+[TextArea(minLines: 0, maxLines: 5)]
+*/
 [Serializable]
 public class Job
 {
   public Task[] tasks;
+  public int taskNr = 0;
+
   public string type; // work / learn
 
   public string salary;
