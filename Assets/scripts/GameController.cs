@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] Job currentJob;
+    [SerializeField] Slider slider;
 
     public string getLanguage(){
       if (currentJob.type == "") return "None";
@@ -16,13 +16,26 @@ public class GameController : MonoBehaviour
     public void onClick(){
       if (currentJob.type == "") return ;
 
+      //  setup slider
+      int maxValue = 0;
+      foreach (Task task in currentJob.tasks) {
+        maxValue += task.requiredLines;
+      }
+      slider.maxValue = maxValue;
+
+      int value = 0;
+      foreach (Task task in currentJob.tasks) {
+        value += task.lines;
+      }
+      slider.value = value;
+
       currentJob.tasks[currentJob.taskNr].lines++;
+
       if (currentJob.tasks[currentJob.taskNr].lines >= currentJob.tasks[currentJob.taskNr].requiredLines) {
-        Debug.Log("Task Compleate");
+        Debug.Log($"Task Compleate nr: {currentJob.taskNr}");
         currentJob.taskNr++;
 
         //if last task
-        Debug.Log(currentJob.taskNr);
         if (currentJob.taskNr >= currentJob.tasks.Length) {
           switch (currentJob.type){
             case "work":
@@ -32,12 +45,12 @@ public class GameController : MonoBehaviour
               addSkill(currentJob.salary);
               break;
             default:
-              Debug.LogError($"Invalid value: {name}. Expected: work or learn");
+              Debug.LogError($"Invalid value: {currentJob.type}. Expected: work or learn");
               break;
           }
+          currentJob = null;
           return;
         }
-        currentJob = null;
       }
     }
 
