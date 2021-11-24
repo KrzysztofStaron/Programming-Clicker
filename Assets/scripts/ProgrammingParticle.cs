@@ -18,6 +18,7 @@ public class ProgrammingParticle : MonoBehaviour
       particle.transform.localScale = new Vector3(1, 1, 1);
       TMP_Text text = particle.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
       text.text = LanguageKeywords.get(gc.getLanguage());
+      gc.onClick();
     }
 }
 
