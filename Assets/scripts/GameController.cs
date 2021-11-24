@@ -4,7 +4,7 @@ using System;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] Job currentJob;
+    public Job currentJob;
 
     [Header("Slider: ")]
     [SerializeField] Slider slider;
@@ -13,16 +13,20 @@ public class GameController : MonoBehaviour
     [SerializeField] int value = 1;
 
     public string getLanguage(){
-      if (currentJob.type == "") return "None";
-
-      return currentJob.tasks[currentJob.taskNr].languageName;
+      if (currentJob.type == "" || currentJob == null){
+        return "None";
+      } else {
+        return currentJob.tasks[currentJob.taskNr].languageName;
+      }
     }
 
     void updateSlider(){
-      sliderObj.SetActive(currentJob.type != "");
-      if (currentJob.type == "") {
+      sliderObj.SetActive(true);
+      if (currentJob == null) {
+        sliderObj.SetActive(false);
         return ;
       }
+
       maxValue = 0;
       foreach (Task task in currentJob.tasks) {
         maxValue += task.requiredLines;
