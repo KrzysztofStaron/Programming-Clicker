@@ -11,13 +11,19 @@ public class ProgrammingParticle : MonoBehaviour
 
     void OnMouseDown()
     {
+      string language = gc.getLanguage();
+      if (language == "None") return ;
+
       Vector2 pos = cam.ScreenToWorldPoint(Input.mousePosition);
       GameObject particle = Instantiate(textParticle, pos, Quaternion.identity);
+
       particle.transform.SetParent(parent);
       particle.transform.position = pos;
       particle.transform.localScale = new Vector3(1, 1, 1);
+
       TMP_Text text = particle.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
-      text.text = LanguageKeywords.get(gc.getLanguage());
+      text.text = LanguageKeywords.get(language);
+
       gc.onClick();
     }
 }
