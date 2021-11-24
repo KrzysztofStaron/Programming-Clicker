@@ -5,7 +5,12 @@ using System;
 public class GameController : MonoBehaviour
 {
     [SerializeField] Job currentJob;
+
+    [Header("Slider: ")]
     [SerializeField] Slider slider;
+    [SerializeField] GameObject sliderObj;
+    [SerializeField] int maxValue = 0;
+    [SerializeField] int value = 1;
 
     public string getLanguage(){
       if (currentJob.type == "") return "None";
@@ -13,21 +18,28 @@ public class GameController : MonoBehaviour
       return currentJob.tasks[currentJob.taskNr].languageName;
     }
 
-    public void onClick(){
-      if (currentJob.type == "") return ;
-
-      //  setup slider
-      int maxValue = 0;
+    void updateSlider(){
+      sliderObj.SetActive(currentJob.type != "");
+      if (currentJob.type == "") {
+        return ;
+      }
+      maxValue = 0;
       foreach (Task task in currentJob.tasks) {
         maxValue += task.requiredLines;
       }
+
       slider.maxValue = maxValue;
 
-      int value = 0;
+      value = 1;
       foreach (Task task in currentJob.tasks) {
         value += task.lines;
       }
       slider.value = value;
+    }
+
+    public void onClick(){
+      if (currentJob.type == "") return ;
+      updateSlider();
 
       currentJob.tasks[currentJob.taskNr].lines++;
 
@@ -49,6 +61,7 @@ public class GameController : MonoBehaviour
               break;
           }
           currentJob = null;
+          updateSlider();
           return;
         }
       }
