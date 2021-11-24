@@ -16,7 +16,11 @@ public class GameController : MonoBehaviour
       if (currentJob.type == "" || currentJob == null){
         return "None";
       } else {
-        return currentJob.tasks[currentJob.taskNr].languageName;
+        try {
+          return currentJob.tasks[currentJob.taskNr].languageName;
+        } catch {
+          return "None";
+        }
       }
     }
 
