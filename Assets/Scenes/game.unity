@@ -1661,9 +1661,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentJob:
     tasks:
-    - languageName: '"html"'
+    - languageName: html
       lines: 0
-      requiredLines: 100
+      requiredLines: 2
     taskNr: 0
     type: learn
     salary: html

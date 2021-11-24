@@ -8,21 +8,21 @@ public class GameController : MonoBehaviour
     [SerializeField] Job currentJob;
 
     public string getLanguage(){
-      if (currentJob == null) return "None";
-      
+      if (currentJob.type == "") return "None";
+
       return currentJob.tasks[currentJob.taskNr].languageName;
     }
 
     public void onClick(){
-      if (currentJob == null){
-        return ;
-      }
+      if (currentJob.type == "") return ;
 
       currentJob.tasks[currentJob.taskNr].lines++;
       if (currentJob.tasks[currentJob.taskNr].lines >= currentJob.tasks[currentJob.taskNr].requiredLines) {
         Debug.Log("Task Compleate");
+        currentJob.taskNr++;
 
         //if last task
+        Debug.Log(currentJob.taskNr);
         if (currentJob.taskNr >= currentJob.tasks.Length) {
           switch (currentJob.type){
             case "work":
@@ -38,7 +38,6 @@ public class GameController : MonoBehaviour
           return;
         }
         currentJob = null;
-        currentJob.taskNr++;
       }
     }
 
