@@ -1,6 +1,8 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
@@ -10,10 +12,15 @@ public class GameController : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] GameObject sliderObj;
     [SerializeField] int maxValue = 0;
-    [SerializeField] int value = 1;
+    [SerializeField] int value = 0;
+
+    [Header("Coins: ")]
+    [SerializeField] int coins = 0;
+    [SerializeField] List<Task> newTasks;
+    [SerializeField] TMP_Text coinsCointer;
 
     public string getLanguage(){
-      if (currentJob.type == "" || currentJob == null){
+      if (currentJob.type == ""){
         return "None";
       } else {
         try {
@@ -24,9 +31,14 @@ public class GameController : MonoBehaviour
       }
     }
 
+    void Update(){
+      updateSlider();
+      coinsCointer.text = ""+coins;
+    }
+
     void updateSlider(){
       sliderObj.SetActive(true);
-      if (currentJob == null) {
+      if (currentJob.type == "") {
         sliderObj.SetActive(false);
         return ;
       }
@@ -36,9 +48,9 @@ public class GameController : MonoBehaviour
         maxValue += task.requiredLines;
       }
 
-      slider.maxValue = maxValue;
+      slider.maxValue = maxValue - 1;
 
-      value = 1;
+      value = 0;
       foreach (Task task in currentJob.tasks) {
         value += task.lines;
       }
@@ -47,7 +59,6 @@ public class GameController : MonoBehaviour
 
     public void onClick(){
       if (currentJob.type == "") return ;
-      updateSlider();
 
       currentJob.tasks[currentJob.taskNr].lines++;
 
@@ -56,7 +67,7 @@ public class GameController : MonoBehaviour
         currentJob.taskNr++;
 
         //if last task
-        if (currentJob.taskNr >= currentJob.tasks.Length) {
+        if (currentJob.taskNr >= currentJob.tasks.Count) {
           switch (currentJob.type){
             case "work":
               addMoney(Int32.Parse(currentJob.salary));
@@ -68,18 +79,24 @@ public class GameController : MonoBehaviour
               Debug.LogError($"Invalid value: {currentJob.type}. Expected: work or learn");
               break;
           }
-          currentJob = null;
-          updateSlider();
+          currentJob = new Job();
           return;
         }
       }
     }
 
+    public void newJob(string lan){
+      newTasks[0] = new Task(lan, 100);
+
+      currentJob = new Job("work", "100", newTasks);
+    }
+
     void addSkill(string name){
-      Debug.LogWarning($"addSkill called name: {name}");
+      Debug.LogWarning($"addSkill ({name})");
     }
 
     void addMoney(int count){
-      Debug.LogWarning($"addMoney called count: {count}");
+      Debug.Log($"addMoney ({count})");
+      coins += count;
     }
 }

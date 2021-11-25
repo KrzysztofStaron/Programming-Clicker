@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 /*
@@ -11,25 +12,18 @@ using System;
 [Serializable]
 public class Job
 {
-  public Task[] tasks;
+  public List<Task> tasks;
   public int taskNr = 0;
+  public bool active = true;
 
   public string type; // work / learn
 
   public string salary;
 
-  public Job(string jobType, string revard){
-    switch (jobType){
-      case "work":
-        salary = ""+revard;
-        break;
-      case "learn":
-        salary = revard;
-        break;
-      default:
-        Debug.LogError($"Invalid value: {jobType}. Expected: work or learn");
-        break;
-      }
+  public Job(string jobType="", string revard="", List<Task> newTasks = null){
+    tasks = newTasks;
+    type = jobType;
+    salary = ""+revard;
   }
 }
 
@@ -43,5 +37,6 @@ public class Task
   public Task(string name = "", int lines = 500){
     languageName = name;
     requiredLines = lines;
+    Debug.Log("Task created");
   }
 }
